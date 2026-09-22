@@ -176,6 +176,11 @@
       }
       button:hover { color: #efb6c5; }
       .response { min-height: 1.5rem; margin: .85rem 0 0; color: #e8afb9; font: .67rem/1.4 "DM Mono", monospace; letter-spacing: .06em; }
+      .formkit-alert { display: none; }
+      .formkit-alert:not(:empty) { display: block; }
+      .formkit-alert-error { color: #ffb0a4; }
+      .formkit-alert-success { color: #e8afb9; }
+      .formkit-spinner { display: none; }
 
       .foot { color: rgba(243, 237, 228, .5); }
       .foot a { color: inherit; text-decoration: none; }
@@ -202,25 +207,27 @@
         <p class="eyebrow">A new chapter</p>
         <h1>A new <em>expression</em> is taking form.</h1>
         <p class="copy">Stay close. Something considered, unexpected and entirely Kuckian is on its way.</p>
-        <form class="form" id="notify-form">
+        <form
+          class="form seva-form formkit-form"
+          action="https://app.kit.com/forms/9947672/subscriptions"
+          method="post"
+          data-sv-form="9947672"
+          data-uid="0cca038066"
+          data-format="inline"
+          data-version="5"
+        >
+          <ul class="formkit-alert formkit-alert-error response" data-element="errors" data-group="alert"></ul>
           <label class="sr-only" for="email">Email address</label>
-          <input id="email" type="email" autocomplete="email" placeholder="Your email address" required />
-          <button type="submit">Notify me&nbsp; ↗</button>
+          <input id="email" class="formkit-input" name="email_address" type="email" autocomplete="email" placeholder="Your email address" aria-label="Email address" required />
+          <button class="formkit-submit" data-element="submit" type="submit"><span>Notify me&nbsp; ↗</span></button>
         </form>
-        <p class="response" id="response" aria-live="polite"></p>
       </main>
       <footer class="foot">
         <span>© Kuckian</span>
         <span class="orbit">Coming into view</span>
       </footer>
     </div>
-    <script>
-      document.getElementById('notify-form').addEventListener('submit', (event) => {
-        event.preventDefault();
-        document.getElementById('response').textContent = 'Thank you — we’ll be in touch.';
-        event.currentTarget.reset();
-      });
-    </script>
+    <script async src="https://f.convertkit.com/ckjs/ck.5.js"></script>
   </body>
 </html>
 
