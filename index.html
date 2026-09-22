@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#100d15" />
+    <title>Kuckian — A new expression is taking form.</title>
+    <meta name="description" content="A new expression is taking form. Be the first to know." />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600&display=swap');
+
+      :root {
+        color-scheme: dark;
+        --ink: #100d15;
+        --bone: #f3ede4;
+        --soft: rgba(243, 237, 228, 0.68);
+        --line: rgba(243, 237, 228, 0.24);
+      }
+
+      * { box-sizing: border-box; }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      html, body { min-height: 100%; }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--ink);
+        color: var(--bone);
+        font-family: Manrope, Arial, sans-serif;
+      }
+
+      .page {
+        isolation: isolate;
+        min-height: 100svh;
+        position: relative;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        overflow: hidden;
+        padding: clamp(1.5rem, 4vw, 3.5rem);
+      }
+
+      .aura, .aura::before, .aura::after {
+        position: absolute;
+        pointer-events: none;
+        content: "";
+      }
+
+      .aura {
+        z-index: -3;
+        inset: -18%;
+        background:
+          radial-gradient(ellipse 38% 42% at 22% 32%, rgba(181, 22, 99, 0.72) 0%, rgba(125, 17, 75, 0.34) 33%, transparent 72%),
+          radial-gradient(ellipse 42% 52% at 83% 18%, rgba(19, 45, 106, 0.75) 0%, rgba(16, 23, 55, 0.44) 38%, transparent 74%),
+          radial-gradient(ellipse 50% 38% at 76% 78%, rgba(44, 77, 45, 0.55) 0%, rgba(10, 33, 25, 0.2) 42%, transparent 76%),
+          linear-gradient(135deg, #140b18 0%, #0b1120 47%, #15110d 100%);
+        filter: saturate(115%);
+        animation: drift 18s ease-in-out infinite alternate;
+      }
+
+      .aura::before {
+        inset: 0;
+        background:
+          repeating-radial-gradient(ellipse at 52% 58%, transparent 0 7px, rgba(255,255,255,0.028) 8px 9px, transparent 10px 22px),
+          linear-gradient(112deg, transparent 20%, rgba(245, 166, 199, 0.1) 47%, transparent 66%);
+        mix-blend-mode: screen;
+        opacity: .82;
+        transform: rotate(-13deg) scale(1.25);
+      }
+
+      .aura::after {
+        inset: -3%;
+        opacity: .34;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.52'/%3E%3C/svg%3E");
+        mix-blend-mode: soft-light;
+      }
+
+      .topline, .foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        text-transform: uppercase;
+        letter-spacing: .14em;
+        font: 500 clamp(.57rem, 1vw, .68rem)/1.3 "DM Mono", monospace;
+      }
+
+      .topline { color: rgba(243, 237, 228, .72); }
+
+      .mark {
+        margin: 0;
+        color: #fff;
+        font: 500 clamp(1.2rem, 2.25vw, 1.9rem)/1 Arial, sans-serif;
+        letter-spacing: .46em;
+        padding-left: .46em;
+      }
+
+      .topline span:last-child { text-align: right; }
+
+      main {
+        width: min(100%, 68rem);
+        align-self: center;
+        padding: clamp(5rem, 12vh, 9rem) 0 clamp(5rem, 9vh, 7rem);
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: .72rem;
+        margin: 0 0 clamp(1.5rem, 3vw, 2.5rem);
+        color: rgba(255, 233, 209, .72);
+        text-transform: uppercase;
+        letter-spacing: .17em;
+        font: 500 .62rem/1.4 "DM Mono", monospace;
+      }
+
+      .eyebrow::before { content: ""; width: 2.2rem; height: 1px; background: currentColor; }
+
+      h1 {
+        max-width: 11ch;
+        margin: 0;
+        font-size: clamp(3.3rem, 8.6vw, 8.4rem);
+        font-weight: 400;
+        line-height: .94;
+        letter-spacing: -.065em;
+        text-wrap: balance;
+      }
+
+      h1 em { color: #e8afb9; font-style: italic; font-family: Georgia, serif; font-weight: 400; letter-spacing: -.085em; }
+
+      .copy {
+        width: min(100%, 28rem);
+        margin: clamp(2rem, 5vw, 3.6rem) 0 1.2rem;
+        color: var(--soft);
+        font-size: clamp(.95rem, 1.3vw, 1.1rem);
+        line-height: 1.62;
+      }
+
+      .form {
+        display: flex;
+        width: min(100%, 31rem);
+        border-bottom: 1px solid var(--line);
+        transition: border-color .25s ease;
+      }
+      .form:focus-within { border-color: var(--bone); }
+      input {
+        min-width: 0;
+        flex: 1;
+        border: 0;
+        outline: 0;
+        padding: 1rem 0 .95rem;
+        background: transparent;
+        color: var(--bone);
+        font: 400 .9rem/1.2 Manrope, sans-serif;
+      }
+      input::placeholder { color: rgba(243, 237, 228, .52); }
+      button {
+        border: 0;
+        padding: 0 0 0 1rem;
+        background: transparent;
+        color: var(--bone);
+        cursor: pointer;
+        font: 500 .64rem/1 "DM Mono", monospace;
+        letter-spacing: .13em;
+        text-transform: uppercase;
+      }
+      button:hover { color: #efb6c5; }
+      .response { min-height: 1.5rem; margin: .85rem 0 0; color: #e8afb9; font: .67rem/1.4 "DM Mono", monospace; letter-spacing: .06em; }
+
+      .foot { color: rgba(243, 237, 228, .5); }
+      .foot a { color: inherit; text-decoration: none; }
+      .orbit { display: flex; align-items: center; gap: .5rem; }
+      .orbit::before { content: ""; width: .45rem; height: .45rem; border: 1px solid currentColor; border-radius: 50%; }
+
+      @keyframes drift { from { transform: scale(1) rotate(0); } to { transform: scale(1.08) rotate(2deg); } }
+      @media (max-width: 42rem) {
+        .page { padding: 1.35rem; }
+        .topline span:last-child { display: none; }
+        .foot { font-size: .52rem; letter-spacing: .1em; }
+      }
+      @media (prefers-reduced-motion: reduce) { .aura { animation: none; } }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="aura" aria-hidden="true"></div>
+      <header class="topline">
+        <p class="mark" aria-label="Kuckian">KUCKIAN</p>
+        <span>London / Paris / Everywhere</span>
+      </header>
+      <main>
+        <p class="eyebrow">A new chapter</p>
+        <h1>A new <em>expression</em> is taking form.</h1>
+        <p class="copy">Stay close. Something considered, unexpected and entirely Kuckian is on its way.</p>
+        <form class="form" id="notify-form">
+          <label class="sr-only" for="email">Email address</label>
+          <input id="email" type="email" autocomplete="email" placeholder="Your email address" required />
+          <button type="submit">Notify me&nbsp; ↗</button>
+        </form>
+        <p class="response" id="response" aria-live="polite"></p>
+      </main>
+      <footer class="foot">
+        <span>© Kuckian</span>
+        <span class="orbit">Coming into view</span>
+      </footer>
+    </div>
+    <script>
+      document.getElementById('notify-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        document.getElementById('response').textContent = 'Thank you — we’ll be in touch.';
+        event.currentTarget.reset();
+      });
+    </script>
+  </body>
+</html>
+
